@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-nfs-pv1
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: <nfs server ip>
+    path: "/srv/nfs/kubedata"
+
+
+
+# There is lot of persistance volme plugin K8's support here we are using NFS server as a
+# storage volume inside K8's cluster
+
+
+# Setting NFS server
+# 1)setup NFS server on host machine and the service as systemd service.
+# 2)and edit the server file to which all ip adress this nfs directory should be exposed those ip becomes nfs client
+# now we are good to mount NFS path to worker node og K8's cluster.
+# 3) Login to each of the K8's worker node and mount the NFS vloume created from NFS Server.
+# Like Eg. mount -t nfs 192.168.1.10:/srv/nfs/kubedata /mnt  
+# /mnt partition in the worker node in the mounted nfs path
+# unmount /mnt    # nfs server ip should be accessible from the cluster this is what verified.
+# mount grep | <mount-name i.e kubedata>
+
+# reclaim policy of peristance volume can be recycle or delete or retain.
