@@ -1,0 +1,20 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: hellowprld-cron
+spec:
+  schedule: "* * * * *"
+  jobTemplate:
+   spec:
+    template:
+      spec:    
+      containers:
+        - image: busybox
+          name: busybox
+          command: ["echo", "Hello Kubernetes!"] 
+      restartPolicy: Never
+
+
+# cronjob is used to schedudle a job based on the time duration
+# kc describe cronjob <cronjob-name> | less
+# kc delete pods --all

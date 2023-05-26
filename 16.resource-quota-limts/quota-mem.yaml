@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: quota-demo-mem
+  namespace: quota-demo-ns
+spec:
+  hard:
+    limits.memory: "500Mi"  # all pods cannot use collectively more than 500Mi
+    # request.memory: "100Mi"   # maximum memory a pod can request in its config file.
+
+
+
+# resource limit are applied for restrict memory uage, CPU utilisation, storage restriction
+# this is based on resource and not on amount of resource.
+# prod namespace should have a greater memeory CPU resources available than dev namespace
+
+# kc get quota -n <namespace>
+# kc describe quota <quota-name> -n <namespace>
+# in ns quota-demo-ns collective usage of all pods should not exceed 500Mi 

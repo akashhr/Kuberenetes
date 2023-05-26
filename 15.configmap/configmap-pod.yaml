@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: busybox
+spec:  
+  # volumes:                          # mounting config map as volume inside the pod/container
+  # - name: demo
+  #   configMap:
+  #     name: demo-configmap
+  containers:
+  - image: busybox
+    name: busybox
+    command: ["/bin/sh"]
+    args: ["-c", "sleep 600"]
+    # volumeMounts:                    #  mounting /mydata as montpath for K8'S configmap
+    # - name: demo
+    #   mountPath: /mydata
+    env:                            
+      - name: dbname                    # here basically we are pulling a value from config map and asigning it to
+                                        # to the variable inside the container/pod
+        valueFrom:
+          configMapKeyRef:
+            name: demo-configmap
+            key: db.name
+      - name: dburl   
+        valueFrom:
+          configMapKeyRef:
+            name: demo-configmap
+            key: db.url
+          
+     
+
+# How to use a config map defined  inside a pod?
+# kc exec -it <pod-name>  /bin/sh
+# > env | grep -i db

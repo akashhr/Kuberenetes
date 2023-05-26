@@ -1,0 +1,23 @@
+apiVersion: vextensions/v1beta1 
+kind: Replicaset
+metadata:
+  name: nginx-replicaset # name of replicaset
+  label:                 # label attached to replicaset k8's object
+   app: nginx
+spec:                    # defines the desired state of the ReplicaSet, including the number of replicas and the Pod template. 
+  replicas: 3            
+  selector:              # Match the Pods controlled by the ReplicaSet with pod labels
+    matchLabels:
+     app: nginx
+  template:
+    metadata:             # metadata about the pods
+     label:    
+      app: nginx           # labels assigned to the pod K8's object.
+    spec:
+      containers:
+      - image: nginx
+        name: nginx      # container name
+
+
+# replicaset make sure pods are not deleted if deleted it should bring new pod 
+# replicaset helps in load sharing , fail over.

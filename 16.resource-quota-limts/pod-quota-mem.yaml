@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  namespace: quota-demo-ns
+spec:
+  contianers:
+  - image: nginx
+    name: nginx
+    resources:
+      limits:
+        memory: "100Mi"          # cluster wont allow pod to consume more than 100Mi of memory in a namespace.
+      # requests:
+      #   memory: "200Mi"
+
+# in pod specification if we dont specify the request whatever ther in limit is takes as request
+# Above fails because we are deploying the pod to the namespace where resource limit is set
+# so add a resources dictionary field
+# When we are deploying to the namespace where resource limit is set we have to specify the limit for pod
+# inside the pod specification we can also create a default limit range for pod specification.
+# what is pod request memory more than limit Eg 800Mi in above case where upperlimit is 500Mi?
+
+
+# In production based K8's cluster setup we need to setup these resource quota and resource limts
+# to manage them effectively.

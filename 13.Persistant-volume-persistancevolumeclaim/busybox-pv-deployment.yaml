@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: busy-box
+spec:
+  volumes:
+  - name: host-volume                          # to be used in the mount Path
+    persistanceVolumeClaim:
+      claimName: pvc-hostpath
+  containers:
+  - image: nginx
+    name: nginx 
+    command: ["/bin/sh"]
+    args: ["-c", "sleep 600"]
+    volumeMounts:
+    - name: host-volume
+      mountPath: /mydata                        # mount path inside pod/container.
+
+
+
+# we need to mount persistance volume claim inside the pod/container.
+
+# kc descrive pod <pod-name> -o wide | less
+
+# kc exec <containername> ls 
+
+# if we delete the pod what happens to the pvc
+
+# deleting pvc (kc delete pvc <pvc-name>) will not delete the pv as recliam policy is retain.

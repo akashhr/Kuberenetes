@@ -1,0 +1,34 @@
+apiVersion: vextensions/v1beta1 
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  label:
+   app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+     app: nginx
+  template:
+    metadata:
+     label:
+      app: nginx
+    containers:
+    - image: nginx
+      name: nginx
+    nodeSelector:
+      demoserver: true
+
+# while using pod node selector there is no need of using nodeselctor in K8's manifest file.
+
+# steps for pod node selector (admission control plugin)
+
+# 1) ssh master node
+# 2) cd /etc/kubernetes/manifest
+# 3) vi kube-apiserver.yaml    (--enable-admission-plugin = PodNodeSelector)
+# 4) logout of master node
+# 5) kubectl edit ns <ns-name>   (adding annotation here)
+
+
+
+  

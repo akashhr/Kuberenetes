@@ -1,0 +1,29 @@
+apiVersion: vextensions/v1beta1 
+kind: Deployment
+metadata:                       
+  name: nginx-deployment
+  label:
+   app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+     app: nginx
+  template:
+    metadata:
+     label:
+      app: nginx
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+
+
+# DEPLOYMENT = REPLICASET + upgrading the release 
+
+# service must be created to access the deployment.
+
+# k8's 3 DEFAULT NAMESPACE ( each ns has certain pods deployed for functioning of K8'S)
+# 1) kube-system            ks get pods -n kube-system
+# 2) kube-public
+# 3) default

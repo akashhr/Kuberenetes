@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: ConfigMap
+meadata:
+  name: demo-configmap
+data:
+  db.name: "akashhr"
+  db.url: "mysql.com"
+
+
+
+# we can mount configmap as env variables or as a volume inside the pod/container
+
+# configmap can be created through
+# 1) yaml file
+# 2) kc create configmap <configmap-name> --from-literal=db.name=akashhr --from-literal=db.url=mysql.com
+#   kc create configmap <configmap-name> --from-file=/misc/my.cnf 
+  #  > cat /misc/my.cnf
+  # [mysqld]
+  # pid-file        = /var/run/mysqld/mysqld.pid
+  # socket          = /var/run/mysqld/mysqld.sock
+  # port            = 3306
+  # datadir         = /var/lib/mysql
+  # default-storage-engine = InnoDB
+  # character-set-server = utf8
+  # bind-address            = 127.0.0.1
+  # general_log_file        = /var/log/mysql/mysql.log
+  # log_error = /var/log/mysql/error.log
+#   kc get cm <configmap-name> -o yaml  # verify config map after cretaing it through the commanline.
+
+# all application specific configuration are stored in config map, if they are kept inside container
+# when w want to update the configuration we may need to restart the container to take a change
+# but using config map container takes changes of config map dynamically to the application running insie container.
+# changes are done by the scheduler and it wont happen immedieatlty it takes few seconds it depends on load in cluster 
+# and how fast scheduler will schedule the pods to worker node.
+
+# kc get cm
+# kc describe configmap <configmap-name>
+# kc get cm <configmap-name> -o yaml
+
+
+# immutable secret and config map improves the preformance of cluster as api server always need to take care of the 
+# of the K8'S resources 
+# set flag immutable: true flad in deployment file then api server wont monitor this resource.
+
+

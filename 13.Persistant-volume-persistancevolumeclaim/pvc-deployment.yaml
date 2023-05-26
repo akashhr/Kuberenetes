@@ -1,0 +1,18 @@
+apiVersion: v1 
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-hostname            # name of persistant volume claim
+spec:                           # defines the specification for the PersistentVolume claim.
+  storageClassName: manual      # Storage classes define different levels of storage with various properties
+  accessModes:
+    - ReadWriteOnce
+  resource:
+    requests:
+      storage: 100Mi
+
+
+
+# kc get pvc
+# kc delete pvc <pvc-name>
+
+# now create a pod using persistance volume claim.

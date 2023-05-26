@@ -1,0 +1,83 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-pod # name of the pod 
+spec:
+  containers:
+  - image: nginx
+    name: nginx # name of the container
+
+# K8'S = HIGH AVAILABILITY & HIGH SCALIBILITY & CONTAINER ORCHESTRATION TOOL.
+
+# K8's cluster
+# Master node, Worker node.
+
+# scheduler will schedule the pods in one of the worker nodes
+
+
+# .kube configuration file is basically present in the kuberenetes master node need to copy to 
+# worker node to run the kubectl command.
+
+# Not ideal to have 2 containers in the single poad as it is difficult for scaling.
+
+# we can use vargant or kubeadm to provision the K8's cluster.
+
+
+# COMMANDS
+
+
+# kc version --short
+
+# K8'S object = pods, replicaset, deployment.
+
+# kc cluster-info (get cluster info)
+
+# kc get nodes
+
+# kc get events
+
+# kc get ns
+
+# kc create -f <config-file>
+
+# kc apply -f <config-file>      # for updating chnges to the deployment made
+
+# kc delete -f <config-file>     # to delete the deployment created by the config-file before.
+
+# watch kc get <k8's object> -o wide
+
+# kc describe <K8's object> <K8's object name> | less
+
+# kc edit <k8's object> <k8's-object-name>    # to make changes to running k8's resources
+
+# kc run nginx1 --image=nginx --replicas=1 -n <namespace> 
+
+# kc scale deploy <deployment-name> --replicas 4
+
+# kc get pod <pod-name> -o yaml > /tmp/pod.yaml
+
+# kc config view
+
+# kc config get-contexts
+
+# kc config current-context
+
+# kc config set-context <context-name> --namespace <ns-name> --user=<user-name> --cluster=<cluster-name>
+
+# kc config use-context <context-name>
+
+# kc run nginx --image nginx --replicas 4 -n <ns-name>
+
+
+
+
+# NODE SELECTOR
+
+# kc label node <node-name> <key>=<value>
+# kc get node <node-name> --show-labels
+
+# watch kc get all -o wide
+# kc create deployment.yaml
+# kc describe pod <pod-name>  | less
+# kc scale deploy <deployment-name> --replicas=2      scaled pod will also be scheduled to node selected by worker node
+

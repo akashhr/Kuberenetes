@@ -1,0 +1,25 @@
+apiVersion: batch/v1 
+kind: Job
+metadata:
+  name: hello-world
+spec:
+  activeDeadlineSeconds: 10 # if job doesnot complete its run in 10s pod will terminate
+  completion: 2 # to run job inside pod 2 times serially and not parallely.
+  parallelism: 2  # run 2 jobs parallely at a time.
+  backoffLimit: 2 # if command ran fails , k8's will create a pod max 2 times and stop creating pods
+  template:
+   spec:
+    containers:
+      - image: busybox
+        name: busybox
+        command: ["echo", "Hello Kubernetes!"] 
+        # command: ["sleep", "60"]  if job is running and we kill a job it wil run agin and again until exit status 0
+        # kc delete pod <pod-name>
+    restartPolicy: Never
+
+
+
+# deploying jobs in the pods
+# kc logs <pod-name>
+# kc describe job <job-name> | less 
+# kc delete job <job-name> | less             k8's by default won't kill the job after executing we nedd to kill it

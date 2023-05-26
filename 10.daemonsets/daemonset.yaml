@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1 
+kind: DaemonSet
+metadata:
+  name: nginx-daemonset
+spec:
+  selector:
+    matchLabels:
+     demotype: nginx-daemonset-demo
+  template:
+    metadata:
+     label:
+      demotype: nginx-daemonset-demo
+    containers:
+    - image: nginx
+      name: nginx
+    nodeSelector:
+      gpupresent: "true"
+
+# kc label node <node-name> gpupresent=true
+# kc get nodes -l gpupresent=true
+
+# there is no Node selector, Pod Node Selector, Pod affinity(verify by `kc describe <pod|daemonset> <pod-name | daemonset-name> | less `) and the number of replicas deploed in 
+# daemonset replicas is equal to number of worker node if any existing daemonset pod is deleted then scheduler will automaticaaly create a new pod

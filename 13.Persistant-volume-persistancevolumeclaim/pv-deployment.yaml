@@ -1,0 +1,37 @@
+apiVersion: v1 
+kind: PersistentVolume
+metadata:
+  name: pv-hostname             # name of persistant volume
+  labels:                
+   type: local
+spec:                           # defines the specification for the PersistentVolume.
+  storageClassName: manual      # Storage classes define different levels of storage with various properties
+  persistentVolumeReclaimPolicy: Retain
+  # persistentVolumeReclaimPolicy: Delete     # here deleting pvc should delete the pv and 
+  # works only for /tmp and not for other directory. here /kube is not in /tmp so pv donot delete
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostpath:                     # hostpath is directory in one of the node.
+    path: "/kube"               # directory path on the host machine that will be used as the storage for the PersistentVolume 
+  #nfs:                          # before mounting nfs we should make sure nfs server ip is accessible by all worker nodes
+  #  server: "10.0.0.1"          # nfs server ip adress
+  #  path: "/srv/nfs/kube"        # nfs path
+
+
+
+# nfs mount path will be running on the different nfs server make sure worker node can access the worker ip
+# and mount the nfs path in nfs server to the worker node.
+
+# persistant volume works if the pod gets scheduled on the node where we created the hostpath so 
+# hostpath is not genrally used in producation environment as that partition is restricted to one particular
+# worker node.volume is specific to one particuar node.
+
+# kc get pv
+
+# persistance vlume claim should also be of ReadWiteOnce mode as PV mode is ReadWriteOnce
+
+# only one persistance volume claim can use one persistance volume 1:1 mapping
+
+# at the end if we delete pv and pvc this wont delete the parititon example here /kube
