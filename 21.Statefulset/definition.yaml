@@ -1,0 +1,55 @@
+# Most of the applications are stateful applications.
+# To make statless applications as stateful application we need to attach a persistant volume to it.
+
+
+# Satateful sets that make diffferent to deployment is 
+# 1) has unique name and ordering of the pod is important
+# 2) unique stable storage
+# 3) has unique network identity
+# 4) has ordered provisioning.
+
+# In stateless applicaton we can create as many pods as possible and we can delete it too as it donot 
+# depends on the underlying storage.
+
+# the name of the stateful set pod will get value as <nameof-stateful-set>_<numerical value>
+
+
+# ordered provisining - When we create the stateful set all pods are not prvisioned paralley it is provisoned serially.
+# When we delete the stateful set deletion of pods happens in the LIFO order.
+# scaling rolling updates of stateful sets happens in the LIFO order
+
+
+# static provisioning - We need to create ask cluster admin to create the Pv before deploying the statefulsets
+# dynamic provisoining - If you use cloud storage persiatnt disk provided by GCP , azure. we need to create a 
+# just storage class templates no need to pre-provosion the pv. Here when we want to depoy the stateful set we 
+# just need to create a persistant volume claim where we need to specify the storage class which matches the s
+# storageclass defined in the cloud.
+# But here we are using local cluster  and not cloud  and dynamic provisioning is not supported for NFS plugin
+# so need to pre-provison the PV
+# here we need to create the pvc manually or create a volume claim template inside the pod specification.
+# volum eclaim template helps in the association od the pods to the Pv i.e if pod is deleted or re-scheduled
+# as stateful set is expected to create a replca of 4 it creates a new pod and mounts the same persistant volume
+# of previously deleted pod it wont mount different voume.
+
+
+# VolumeClaim tempate can only be used in stateful set and connot be used in the deployment set.
+
+
+# in static provisoining if we delete the pvc then pv will wont e getting deleted.
+# in dynamic provisioning if we delet the pvc then pv will be deleted
+
+# reclaim policy is set to the Pv and not to PVC.
+# When we delete the pv and associated then then pvc wont be avialble to other pvc and status will be changed to 
+# released from available and wont be available to other pods when reclaim policy is set to retain.
+# When reclaim policy is set to relase then that pv will be available to other pvc when its assocaited pods and pv is deleted.
+
+
+# s per k8's documentation even if we delet the stateful set all pods wont de down so suggested way is to 
+# scale the stateful set down to 0.
+
+# kc scale sts <statefulset-name> --replicas=0  # this is preffered 
+
+# deleting stateful set wont delete the pvc we need to delete it manually 
+# kc delete pv
+
+# deleting pvc wont delete pv we need to delete it manually.

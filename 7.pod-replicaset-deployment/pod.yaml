@@ -18,7 +18,7 @@ spec:
 # .kube configuration file is basically present in the kuberenetes master node need to copy to 
 # worker node to run the kubectl command.
 
-# Not ideal to have 2 containers in the single poad as it is difficult for scaling.
+# Not ideal to have 2 containers in the single pod as it is difficult for scaling.
 
 # we can use vargant or kubeadm to provision the K8's cluster.
 
