@@ -1,0 +1,16 @@
+# kc get ing
+# kc describe ing <ingress-controller-name>
+
+# edit in the /etc/hosts file
+# 172.16.16.240 nginx.example.com        <Ip adress to be routed> <domain name from which the traffic is comming>
+
+
+# we are using MetalLb as a loadbalancer
+# Install metalLb in K8's cluster using helm also create config map (range of Ip to be assigned for Load balancer) for deploymnet of MetalLb
+# MetalLb installiation is done in metallb-system namespace
+
+# Deploy nginx-ingress-controller thorugh helm
+# If we are not using ingress controller we will be exposing all the service through a load balancer
+# and if we are using cloud we might need to pay for all load balancer usage which is expensive
+# by using ingress-controller we are creating one load -balancer and multiple ingress resources 
+# we are configuring ingress-controller which acts as a reverse proxy

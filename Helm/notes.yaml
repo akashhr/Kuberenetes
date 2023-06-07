@@ -1,0 +1,32 @@
+# Helm is the package manager for kubernetes.
+# To deploy an application in kubernetes we need to write the yaml specification file
+# helm configuration file is stored in ~/.helm 
+# tiller is the server component deployed in the cluster as a pod and helm binary will
+# interact with this tiller pods
+# packages ~ application = charts
+
+# kc -n kube-system create serviceaccount tiller
+# kc create clusterrolebinding tiller --clusterrole cluster-admin --serviceaccount=kube-system:tiller      
+#  --serviceaccount=<namespace:service-account-name>
+# kc get clusterrolebinding tiller
+# kc -n kube-system get pods
+
+
+# helm init --service-account tiller  # this initiaties the pod in the K8's cluster in the namespace kube-system
+# kc -n kube-system get deploy,replicaset,pod,serviceaccount,clusterrolebinding | grep tiller
+# helm reset --remove-helm-home        # This will delete the tiller but leaves some orphan k8's resources.
+
+# helm help | less
+# helm home
+# helm repo list
+# helm list 
+# helm status <deployment-name> | less      # to see the ststau of the jenkins deployment
+
+
+# kc version --short
+# helm version --short
+
+
+# how to create your own chart and repository?
+
+# helm v3 need need of server componet

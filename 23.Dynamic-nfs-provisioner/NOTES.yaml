@@ -1,0 +1,18 @@
+# To deploy the statefulset applications , cluater admin should need to create the pv and we need to a pvc 
+# to be used by pods which is time consuming
+
+# since we are not using local cluster we cannot use persistance vlume of the cloud provider like GCP
+# AWS, azure hence no dynamic provisoning.
+
+
+# To enable dynamic provisoining for a local K8's cluster we use NFS CLIENT PROVISONER.
+
+# In dynamic provisoining we donot reate the pv we just create the VOLUME CLAIM TEMPLATE inside the
+# pod specification which provison and creates the pv 
+
+# Having deleting the pod donot delte the pvc and deleting pvc will not delet the pv as reclaim policy is DELTE
+# this logic completly depends on the RECLAIM POLICY
+
+# nfs client provisoner basically is the special pod which has a /persistance which is the mounted from /srv/nfs/kubedata
+# which acts as a storage provisoner and we need to create a StoragClass and point the storage class to this nfs client
+# provisoner pod

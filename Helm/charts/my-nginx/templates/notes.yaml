@@ -1,0 +1,31 @@
+# helm list         displays all installed helm application.
+
+
+# helm install my-nginx .
+# helm install my-nginx . --set replicaCount=2
+# helm inspect values . > values.yaml          # edit vales in the vales.yaml as per the requirement
+# helm install my-nginx -f values.yaml 
+
+
+# helm upgrade my-nginx .
+# helm rollback my-nginx <revision-number>
+# helm uninstall my-nginx
+
+
+
+# to get temporary deployment and service configuration file as below 
+# kc create deploy <deployment-name> --image nginx --dry-run -o yaml
+# kc expose deploy <deployment-name> --port 80 --dry-run -o yaml
+
+
+
+# LOCAL HELM REPOSITORY
+
+# To share the chart to the other users we need to package file to tar file and upload it to the
+# chrat repository whcih is the web server.
+
+# helm package my-nginx
+# helm serve --repo-path . --address "0.0.0.0:5000"
+# helm repo add myrepo 0.0.0.0:5000
+# helm repo ls
+# helm search my-repo

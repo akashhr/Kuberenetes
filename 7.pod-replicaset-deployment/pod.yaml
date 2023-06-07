@@ -33,10 +33,13 @@ spec:
 # kc cluster-info (get cluster info)
 
 # kc get nodes
+# kc get nodes -o wide         # to get all additionalinfo about the nodes.
 
 # kc get events
 
 # kc get ns
+
+# kc get cs                     # to check the health of the k8s components . cs somponent status.
 
 # kc create -f <config-file>
 
@@ -45,6 +48,8 @@ spec:
 # kc delete -f <config-file>     # to delete the deployment created by the config-file before.
 
 # watch kc get <k8's object> -o wide
+
+# kc logs <pod-name>              # To view the logs of the pod.
 
 # kc describe <K8's object> <K8's object name> | less
 
@@ -68,6 +73,10 @@ spec:
 
 # kc run nginx --image nginx --replicas 4 -n <ns-name>
 
+# kc logs -f <k8's resources> -n <namespace>    #Viewing the logs
+
+# kc logs <pod-name>                  # to watch not view the logs of the pod deployed through in K8's cluster.
+
 
 
 
@@ -80,4 +89,15 @@ spec:
 # kc create deployment.yaml
 # kc describe pod <pod-name>  | less
 # kc scale deploy <deployment-name> --replicas=2      scaled pod will also be scheduled to node selected by worker node
+# kc create deploy nginx --image nginx
 
+
+# easy way to deploy an app to k8 and expose service
+
+# kc run nginx --image nginx --replicas 4
+# kc expose deploy nginx --port 80 --type Nodeport       # verify this by accessing nay of the worker nodeip:port
+# kc create deploy <deployment-name> --image nginx --dry-run -o yaml    # prints the k8's manifest file of the deployment.
+# kc expose deploy <deployment-name> --port 80 --dry-run -o yaml        # to print the k8's service file
+
+
+# netstat -nlt             # to find which all prt services are running.

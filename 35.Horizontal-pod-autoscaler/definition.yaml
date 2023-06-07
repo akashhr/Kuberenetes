@@ -1,0 +1,11 @@
+# When load increases kubernete should increae the number of replicas and load balance the the incomming
+# traffic amoug the replicated pods
+# When CPU utilisation or Core Utilisation reaches the maximum threshold pods will be scaled up to 
+# manage the incomming traffic and vice versa through horizontal pod autoscaling.
+# We need to install metrics server to monitor CPU Core utilisation of the pods and nodes
+
+# kc top pods                           gives CPU and memory utilisation of the pods
+# kc top nodes                         gives CPU and memory utilisation of the nodes.
+# above 2 command works only when metrics server is deployed.
+
+# There is a colling period when pods will not auto scale(3 min) up or scale down (5 min)

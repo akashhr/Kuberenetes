@@ -1,0 +1,15 @@
+# We need to create a RBAC to launch the jenkins slave as a pod. This gives permissions for service account to create pods
+
+
+
+# docker logs -f <container-name>
+
+# docker run --name jenkins -d -v jenkins_home:/var/jenkins_home -p 8080:8080 -p 5000:5000 amr-cache-registry.caas.intel.com/cache/jenkins/jenkins:lts
+# 8080 is a web UI port and 5000 port is jnlp port where slave agent connects to the jenkins master
+
+# docker volume ls
+
+# docker run -d -p 5000:5000 --restart=always -v docker:/var/lib/registry registry:2
+
+# kaniko is a place where we can build containe rimage without having access to the dcontainer runtime 
+# and also no need of mounting /var/run/docker.sock to container/pod
